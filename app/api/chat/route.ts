@@ -30,7 +30,9 @@ export async function POST(req: Request) {
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
-  const customBackendUrl = "http://localhost:8000/api/rag_chat";
+  const backendDomain = process.env.BACKEND_DOMAIN;
+  const backendApiEndpoint = process.env.BACKEND_API_ENDPOINT;
+  const customBackendUrl = `${backendDomain}${backendApiEndpoint}`;  
   const customRequest = new Request(customBackendUrl, {
     method: 'POST',
     headers: {
