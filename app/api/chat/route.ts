@@ -6,7 +6,8 @@ import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 
-export const runtime = 'edge'
+// export const runtime = 'edge'  
+// If it is set to 'edge' it does not work (I get [object ReadableStream] as a response)
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -85,6 +86,7 @@ export async function POST(req: Request) {
         }
         controller.enqueue(value);
         chunks.push(decoder.decode(value, { stream: true }));
+        console.log(decoder.decode(value, { stream: true }));
         await read();
       };
       await read();
@@ -96,6 +98,5 @@ export async function POST(req: Request) {
       'Content-Type': 'text/html; charset=utf-8',
     },
   });
-
   return streamingTextResponse;
 }
