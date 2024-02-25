@@ -86,7 +86,6 @@ export async function POST(req: Request) {
         }
         controller.enqueue(value);
         chunks.push(decoder.decode(value, { stream: true }));
-        console.log(decoder.decode(value, { stream: true }));
         await read();
       };
       await read();
@@ -100,3 +99,8 @@ export async function POST(req: Request) {
   });
   return streamingTextResponse;
 }
+
+
+
+// Potential alternative solution to teh [object ReadableStream] issue
+// https://stackoverflow.com/questions/76273091/how-to-send-openai-stream-response-from-nextjs-api-to-client
