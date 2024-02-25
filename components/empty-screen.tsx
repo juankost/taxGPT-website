@@ -29,7 +29,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
         <p className="mb-2 leading-normal text-muted-foreground">
           This is  chatbot designed to help you understand the intricacies of tax law.
         </p>
-        <p className="leading-normal text-muted-foreground">
+        {/* <p className="leading-normal text-muted-foreground">
           You can start a conversation here or try the following examples:
         </p>
         <div className="mt-4 flex flex-col items-start space-y-2">
@@ -44,7 +44,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               {message.heading}
             </Button>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )
