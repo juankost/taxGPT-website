@@ -1,23 +1,22 @@
-import { kv } from '@vercel/kv'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import OpenAI from 'openai'
-
+import {
+  createParser,
+  ParsedEvent,
+  ReconnectInterval,
+} from 'eventsource-parser';
 import { auth } from '@/auth'
+import { kv } from '@vercel/kv'
 import { nanoid } from '@/lib/utils'
-import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 
-// export const runtime = 'edge'  
-// If it is set to 'edge' it does not work (I get [object ReadableStream] as a response)
+export const runtime = 'edge'; // or 'nodejs' which uses Serverless Functions
+export const dynamic = 'force-dynamic'; // always run dynamically
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
+export async function POST(request: Request) {
 
-
-export async function POST(req: Request) {
-  const json = await req.json()
+  const json = await request.json()
   const { messages, previewToken } = json
   const userId = (await auth())?.user.id
+  const id = json.id ?? nanoid()
+  const title = json.messages[0].content.substring(0, 100)
 
   if (!userId) {
     return new Response('Unauthorized', {
@@ -25,32 +24,30 @@ export async function POST(req: Request) {
     })
   }
 
-  if (previewToken) {
-    openai.apiKey = previewToken
-  }
-
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
+
+  let counter = 0;
+
+  // Make request to backend
   const backendDomain = process.env.BACKEND_DOMAIN;
   const backendApiEndpoint = process.env.BACKEND_API_ENDPOINT;
   const customBackendUrl = `${backendDomain}${backendApiEndpoint}`;  
-  const customRequest = new Request(customBackendUrl, {
-    method: 'POST',
+  const res = await fetch(customBackendUrl, {
     headers: {
+      'Accept': 'text/event-stream', // Ensure backend understands we expect a stream
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ messages })
-  }); 
+    method: 'POST',
+    body: JSON.stringify({ messages }),
+  });
 
-  let chunks: Array<any> = [];
 
   // Defining my callback function
   const onCompletion = async (complete_response: string) => {
-    const title = json.messages[0].content.substring(0, 100)
-    const id = json.id ?? nanoid()
     const createdAt = Date.now()
     const path = `/chat/${id}`
-    const payload = {
+    const data = {
       id,
       title,
       userId,
@@ -64,43 +61,50 @@ export async function POST(req: Request) {
         }
       ]
     }
-    await kv.hmset(`chat:${id}`, payload)
+    await kv.hmset(`chat:${id}`, data)
     await kv.zadd(`user:chat:${userId}`, {
       score: createdAt,
       member: `chat:${id}`
     })
   }
-
-  // Create a ReadableStream that fetches and streams the API response
-  const stream = new ReadableStream({
+  
+  
+  let completeResponse = '';
+  const newStream = new ReadableStream({
     async start(controller) {
-      const response = await fetch(customRequest);
-      const reader = response.body!.getReader();
-      const read = async () => {
-        const { done, value } = await reader.read();
-        if (done) {
-          controller.close();            
-          const completion = chunks.join('');
-          onCompletion(completion);
-          return;
+      function onParse(event: ParsedEvent | ReconnectInterval) {
+        if (event.type === 'event') {
+          const data = event.data;
+          if (data === '[DONE]') {
+            controller.close();
+            onCompletion(completeResponse);
+            return;
+          }
+          try {
+              if (counter < 2 && (data.match(/\n/) || []).length) {
+                // this is a prefix character (i.e., "\n\n"), do nothing
+              return;
+            }
+            const queue = encoder.encode(data);
+            controller.enqueue(queue);
+            counter++;
+          } catch (e) {
+            // maybe parse error
+            controller.error(e);
+          }
         }
-        controller.enqueue(value);
-        chunks.push(decoder.decode(value, { stream: true }));
-        await read();
-      };
-      await read();
-    },
-  })
+      }
 
-  const streamingTextResponse = new StreamingTextResponse(stream, {
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
+      const parser = createParser(onParse);
+      for await (const chunk of res.body as any) {
+        parser.feed(decoder.decode(chunk));
+        completeResponse += decoder.decode(chunk);
+      }
     },
   });
-  return streamingTextResponse;
+
+  return new Response(newStream, {
+    status: 200,
+    headers: { 'Content-Type': 'text/event-stream' },
+  });
 }
-
-
-
-// Potential alternative solution to teh [object ReadableStream] issue
-// https://stackoverflow.com/questions/76273091/how-to-send-openai-stream-response-from-nextjs-api-to-client
