@@ -75,15 +75,16 @@ export async function POST(request: Request) {
       function onParse(event: ParsedEvent | ReconnectInterval) {
         if (event.type === 'event') {
           const data = event.data;
+          // console.log('data', JSON.stringify(data));
           if (data === '[DONE]') {
             controller.close();
             onCompletion(completeResponse);
             return;
           }
           try {
-              if (counter < 2 && (data.match(/\n/) || []).length) {
-                // this is a prefix character (i.e., "\n\n"), do nothing
-              return;
+            if (counter < 2 && (data.match(/\n/) || []).length) {
+              // this is a prefix character (i.e., "\n\n"), do nothing
+            return;
             }
             const queue = encoder.encode(data);
             controller.enqueue(queue);
