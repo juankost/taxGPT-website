@@ -82,15 +82,10 @@ export async function POST(request: Request) {
             return;
           }
           try {
-            if (counter < 2 && (data.match(/\n/) || []).length) {
-              // this is a prefix character (i.e., "\n\n"), do nothing
-            return;
-            }
             const queue = encoder.encode(data);
             controller.enqueue(queue);
             counter++;
           } catch (e) {
-            // maybe parse error
             controller.error(e);
           }
         }
