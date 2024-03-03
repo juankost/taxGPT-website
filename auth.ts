@@ -2,11 +2,9 @@ import NextAuth, { type DefaultSession } from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { FirestoreAdapter } from "@auth/firebase-adapter";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirestoreAdapter } from "@auth/firebase-adapter"
 import { firestore, firestore_auth } from "lib/firebase"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
 
 declare module 'next-auth' {
   interface Session {
@@ -22,6 +20,8 @@ export const {
   handlers: { GET, POST },
   auth
 } = NextAuth({
+  // @ts-ignore
+  // adapter: FirestoreAdapter(firestore),
   providers: [
     CredentialsProvider({
       name: "Login",
@@ -33,16 +33,15 @@ export const {
         },
         password: { label: "Password", type: "password" },
       },
-      // @ts-ignore // TODO: fix this
+      // @ts-ignore
       async authorize(credentials: Record<"email" | "password", unknown> | undefined) {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
         try {
-          // @ts-ignore // TODO: fix login with email and password
+          // @ts-ignore
           const userCredential = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
           const user = userCredential.user;
-          console.log(`user found`, user);
           // Return user object if authentication succeeds
           if (user) {
             return { id: user.uid, name: user.displayName || '', email: user.email || '' };

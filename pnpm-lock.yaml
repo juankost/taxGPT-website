@@ -164,7 +164,7 @@ devDependencies:
     specifier: ^8.4.33
     version: 8.4.35
   prettier:
-    specifier: ^3.2.4
+    specifier: ^3.2.5
     version: 3.2.5
   tailwind-merge:
     specifier: ^2.2.0
