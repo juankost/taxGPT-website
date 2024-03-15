@@ -60,7 +60,7 @@ export function LoginPage() {
       window.localStorage.setItem('emailForSignIn', email)
 
       await sendSignInLinkToEmail(auth, email, {
-        url: process.env.NEXT_PUBLIC_ORIGIN + '/login',
+        url: process.env.VERCEL_URL + '/login',
         handleCodeInApp: true
       })
     })
