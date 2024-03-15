@@ -7,6 +7,13 @@ import { cn } from '@/lib/utils'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
+import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
+import { Tokens, getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { User } from '@/app/auth/AuthContext'
+import { AuthProvider } from '@/app/auth/AuthProvider'
+import { authConfig } from '@/config/server-config'
+import { toUser } from '../lib/user'
 
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
@@ -33,7 +40,10 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const tokens = await getTokens(cookies(), authConfig)
+  const user = tokens ? toUser(tokens) : null
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -51,8 +61,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
+            <AuthProvider serverUser={user}>
+              <Header />
+              <main className="flex flex-col flex-1 bg-muted/50">
+                {children}
+              </main>
+            </AuthProvider>
           </div>
           <TailwindIndicator />
         </Providers>
