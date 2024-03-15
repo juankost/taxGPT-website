@@ -26,8 +26,6 @@ export function LoginPage() {
   const [hasLogged, setHasLogged] = React.useState(false)
   const redirect = useRedirectParam()
 
-  console.log('redirect', redirect)
-  console.log('hasLogged', hasLogged)
   useRedirect()
 
   const [handleLoginWithEmailAndPassword, isEmailLoading, emailPasswordError] =
