@@ -58,7 +58,6 @@ export function LoginPage() {
       }
 
       window.localStorage.setItem('emailForSignIn', email)
-      console.log(process.env.NEXT_PUBLIC_SERVER_URL + '/login')
       await sendSignInLinkToEmail(auth, email, {
         url: process.env.NEXT_PUBLIC_SERVER_URL + '/login',
         handleCodeInApp: true
