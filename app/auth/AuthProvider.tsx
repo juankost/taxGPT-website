@@ -42,6 +42,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
     }
 
     setUser(serverUser)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serverUser])
 
   const handleLogout = async () => {
@@ -77,7 +78,9 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
   }
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return onIdTokenChanged(getFirebaseAuth(), handleIdTokenChanged)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

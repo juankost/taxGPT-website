@@ -1,31 +1,32 @@
-import type {Auth, AuthError, AuthProvider, User} from 'firebase/auth';
+import type { Auth, AuthError, AuthProvider, User } from 'firebase/auth'
 import {
   browserPopupRedirectResolver,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
   useDeviceLanguage
-} from 'firebase/auth';
+} from 'firebase/auth'
 
-const CREDENTIAL_ALREADY_IN_USE_ERROR = 'auth/credential-already-in-use';
+const CREDENTIAL_ALREADY_IN_USE_ERROR = 'auth/credential-already-in-use'
 export const isCredentialAlreadyInUseError = (e: AuthError) =>
-  e?.code === CREDENTIAL_ALREADY_IN_USE_ERROR;
+  e?.code === CREDENTIAL_ALREADY_IN_USE_ERROR
 
 export const logout = async (auth: Auth): Promise<void> => {
-  return signOut(auth);
-};
+  return signOut(auth)
+}
 
 export const getGoogleProvider = (auth: Auth) => {
-  const provider = new GoogleAuthProvider();
-  provider.addScope('profile');
-  provider.addScope('email');
-  useDeviceLanguage(auth);
+  const provider = new GoogleAuthProvider()
+  provider.addScope('profile')
+  provider.addScope('email')
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useDeviceLanguage(auth)
   provider.setCustomParameters({
     display: 'popup'
-  });
+  })
 
-  return provider;
-};
+  return provider
+}
 
 export const loginWithProvider = async (
   auth: Auth,
@@ -35,7 +36,7 @@ export const loginWithProvider = async (
     auth,
     provider,
     browserPopupRedirectResolver
-  );
+  )
 
-  return result.user;
-};
+  return result.user
+}
