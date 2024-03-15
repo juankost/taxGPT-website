@@ -1,20 +1,21 @@
 import {
   createParser,
   ParsedEvent,
-  ReconnectInterval,
-} from 'eventsource-parser';
-import { auth } from '@/auth'
+  ReconnectInterval
+} from 'eventsource-parser'
 import { kv } from '@vercel/kv'
 import { nanoid } from '@/lib/utils'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { authConfig } from '@/config/server-config'
 
-export const runtime = 'edge'; // or 'nodejs' which uses Serverless Functions
-export const dynamic = 'force-dynamic'; // always run dynamically
+export const runtime = 'edge' // or 'nodejs' which uses Serverless Functions
+export const dynamic = 'force-dynamic' // always run dynamically
 
 export async function POST(request: Request) {
-
   const json = await request.json()
   const { messages, previewToken } = json
-  const userId = (await auth())?.user.id
+  const userId = (await getTokens(cookies(), authConfig))?.decodedToken?.user_id
   const id = json.id ?? nanoid()
   const title = json.messages[0].content.substring(0, 100)
 
@@ -24,24 +25,23 @@ export async function POST(request: Request) {
     })
   }
 
-  const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
+  const encoder = new TextEncoder()
+  const decoder = new TextDecoder()
 
-  let counter = 0;
+  let counter = 0
 
   // Make request to backend
-  const backendDomain = process.env.BACKEND_DOMAIN;
-  const backendApiEndpoint = process.env.BACKEND_API_ENDPOINT;
-  const customBackendUrl = `${backendDomain}${backendApiEndpoint}`;  
+  const backendDomain = process.env.BACKEND_DOMAIN
+  const backendApiEndpoint = process.env.BACKEND_API_ENDPOINT
+  const customBackendUrl = `${backendDomain}${backendApiEndpoint}`
   const res = await fetch(customBackendUrl, {
     headers: {
-      'Accept': 'text/event-stream', // Ensure backend understands we expect a stream
-      'Content-Type': 'application/json',
+      Accept: 'text/event-stream', // Ensure backend understands we expect a stream
+      'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify({ messages }),
-  });
-
+    body: JSON.stringify({ messages })
+  })
 
   // Defining my callback function
   const onCompletion = async (complete_response: string) => {
@@ -67,40 +67,39 @@ export async function POST(request: Request) {
       member: `chat:${id}`
     })
   }
-  
-  
-  let completeResponse = '';
+
+  let completeResponse = ''
   const newStream = new ReadableStream({
     async start(controller) {
       function onParse(event: ParsedEvent | ReconnectInterval) {
         if (event.type === 'event') {
-          const data = event.data;
+          const data = event.data
           // console.log('data', JSON.stringify(data));
           if (data === '[DONE]') {
-            controller.close();
-            onCompletion(completeResponse);
-            return;
+            controller.close()
+            onCompletion(completeResponse)
+            return
           }
           try {
-            const queue = encoder.encode(data);
-            controller.enqueue(queue);
-            counter++;
+            const queue = encoder.encode(data)
+            controller.enqueue(queue)
+            counter++
           } catch (e) {
-            controller.error(e);
+            controller.error(e)
           }
         }
       }
 
-      const parser = createParser(onParse);
+      const parser = createParser(onParse)
       for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk));
-        completeResponse += decoder.decode(chunk);
+        parser.feed(decoder.decode(chunk))
+        completeResponse += decoder.decode(chunk)
       }
-    },
-  });
+    }
+  })
 
   return new Response(newStream, {
     status: 200,
-    headers: { 'Content-Type': 'text/event-stream' },
-  });
+    headers: { 'Content-Type': 'text/event-stream' }
+  })
 }

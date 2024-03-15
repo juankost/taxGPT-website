@@ -3,9 +3,11 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { kv } from '@vercel/kv'
-
-import { auth } from '@/auth'
 import { type Chat } from '@/lib/types'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { authConfig } from '@/config/server-config'
+import { toSession } from '@/lib/user'
 
 export async function getChats(userId?: string | null) {
   if (!userId) {
@@ -41,14 +43,13 @@ export async function getChat(id: string, userId: string) {
 }
 
 export async function removeChat({ id, path }: { id: string; path: string }) {
-  const session = await auth()
-  
-  if (!session) {
+  const tokens = await getTokens(cookies(), authConfig)
+  if (!tokens?.decodedToken.user_id) {
     return {
       error: 'Unauthorized'
     }
   }
-
+  const session = toSession(tokens)
   const uid = await kv.hget<string>(`chat:${id}`, 'userId')
 
   if (uid !== session?.user?.id) {
@@ -65,13 +66,14 @@ export async function removeChat({ id, path }: { id: string; path: string }) {
 }
 
 export async function clearChats() {
-  const session = await auth()
+  const tokens = await getTokens(cookies(), authConfig)
 
-  if (!session?.user?.id) {
+  if (!tokens?.decodedToken.user_id) {
     return {
       error: 'Unauthorized'
     }
   }
+  const session = toSession(tokens)
 
   const chats: string[] = await kv.zrange(`user:chat:${session.user.id}`, 0, -1)
   if (!chats.length) {
@@ -101,13 +103,14 @@ export async function getSharedChat(id: string) {
 }
 
 export async function shareChat(id: string) {
-  const session = await auth()
+  const tokens = await getTokens(cookies(), authConfig)
 
-  if (!session?.user?.id) {
+  if (!tokens?.decodedToken.user_id) {
     return {
       error: 'Unauthorized'
     }
   }
+  const session = toSession(tokens)
 
   const chat = await kv.hgetall<Chat>(`chat:${id}`)
 
