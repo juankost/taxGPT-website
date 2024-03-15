@@ -58,9 +58,9 @@ export function LoginPage() {
       }
 
       window.localStorage.setItem('emailForSignIn', email)
-      console.log('https://' + process.env.VERCEL_URL + '/login')
+      console.log('https://' + process.env.NEXT_PUBLIC_SERVER_URL + '/login')
       await sendSignInLinkToEmail(auth, email, {
-        url: 'https://' + process.env.VERCEL_URL + '/login',
+        url: 'https://' + process.env.NEXT_PUBLIC_SERVER_URL + '/login',
         handleCodeInApp: true
       })
     })
