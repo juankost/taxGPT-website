@@ -9,28 +9,18 @@ import { ChatHistory } from './chat-history'
 import { getTokens } from 'next-firebase-auth-edge'
 import { cookies } from 'next/headers'
 import { authConfig } from '@/config/server-config'
+import { toSession } from '@/lib/user'
 
 async function UserOrLogin() {
   const tokens = await getTokens(cookies(), authConfig)
-
   if (!tokens?.decodedToken.user_id) {
     return null
   }
-
-  console.log('decodedToken', tokens.decodedToken)
-  // Transform the decodedToken into the structure expected by UserMenu
-  const user = {
-    id: tokens.decodedToken.user_id,
-    sub: tokens.decodedToken.sub,
-    name: tokens.decodedToken.name,
-    email: tokens.decodedToken.email,
-    image: tokens.decodedToken.picture,
-    emailVerified: tokens.decodedToken.email_verified
-  }
+  const session = toSession(tokens)
 
   return (
     <>
-      {tokens?.decodedToken.user_id ? (
+      {session.user.id ? (
         <>
           <SidebarMobile>
             <ChatHistory userId={tokens?.decodedToken.user_id} />
@@ -45,8 +35,8 @@ async function UserOrLogin() {
       )}
       <div className="flex items-center">
         <IconSeparator className="size-6 text-muted-foreground/50" />
-        {user ? (
-          <UserMenu user={user} />
+        {session ? (
+          <UserMenu user={session.user} />
         ) : (
           <Button variant="link" asChild className="-ml-2">
             <Link href="/login?callbackUrl=/">Login</Link>

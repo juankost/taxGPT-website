@@ -8,9 +8,6 @@ export function useRedirect() {
   const { user } = useAuth()
   const redirect = useRedirectParam()
 
-  console.log('redirect', redirect)
-  console.log('user', user)
-
   useEffect(() => {
     if (!user) {
       return
