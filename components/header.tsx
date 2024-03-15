@@ -1,28 +1,39 @@
 import * as React from 'react'
 import Link from 'next/link'
-
-import { cn } from '@/lib/utils'
-import { auth } from '@/auth'
-import { Button, buttonVariants } from '@/components/ui/button'
-import {
-  IconGitHub,
-  IconNextChat,
-  IconSeparator,
-  IconVercel
-} from '@/components/ui/icons'
+import { Button } from '@/components/ui/button'
+import { IconNextChat, IconSeparator } from '@/components/ui/icons'
 import { UserMenu } from '@/components/user-menu'
 import { SidebarMobile } from './sidebar-mobile'
 import { SidebarToggle } from './sidebar-toggle'
 import { ChatHistory } from './chat-history'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { authConfig } from '@/config/server-config'
 
 async function UserOrLogin() {
-  const session = await auth()
+  const tokens = await getTokens(cookies(), authConfig)
+
+  if (!tokens?.decodedToken.user_id) {
+    return null
+  }
+
+  console.log('decodedToken', tokens.decodedToken)
+  // Transform the decodedToken into the structure expected by UserMenu
+  const user = {
+    id: tokens.decodedToken.user_id,
+    sub: tokens.decodedToken.sub,
+    name: tokens.decodedToken.name,
+    email: tokens.decodedToken.email,
+    image: tokens.decodedToken.picture,
+    emailVerified: tokens.decodedToken.email_verified
+  }
+
   return (
     <>
-      {session?.user ? (
+      {tokens?.decodedToken.user_id ? (
         <>
           <SidebarMobile>
-            <ChatHistory userId={session.user.id} />
+            <ChatHistory userId={tokens?.decodedToken.user_id} />
           </SidebarMobile>
           <SidebarToggle />
         </>
@@ -34,11 +45,11 @@ async function UserOrLogin() {
       )}
       <div className="flex items-center">
         <IconSeparator className="size-6 text-muted-foreground/50" />
-        {session?.user ? (
-          <UserMenu user={session.user} />
+        {user ? (
+          <UserMenu user={user} />
         ) : (
           <Button variant="link" asChild className="-ml-2">
-            <Link href="/sign-in?callbackUrl=/">Login</Link>
+            <Link href="/login?callbackUrl=/">Login</Link>
           </Button>
         )}
       </div>
@@ -55,11 +66,12 @@ export function Header() {
         </React.Suspense>
       </div>
       <div className="flex justify-center w-1/2">
-        <h1 className="text-3xl font-bold">TaxIntelligence</h1> {/* Adjust text size as needed */}
+        <h1 className="text-3xl font-bold">TaxIntelligence</h1>{' '}
+        {/* Adjust text size as needed */}
       </div>
       <div className="flex justify-end w-1/4">
         {/* Placeholder for balance, can put other elements if needed */}
       </div>
     </header>
-  );
+  )
 }
