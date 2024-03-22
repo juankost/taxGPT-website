@@ -21,9 +21,15 @@ import { getFirebaseAuth } from '../auth/firebase'
 import { appendRedirectParam } from '../../lib/redirect'
 import { useRedirect } from '../../lib/useRedirect'
 import { useRedirectParam } from '../../lib/useRedirectParam'
+import { useAuth } from '../auth/AuthContext'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { authConfig } from '@/config/server-config'
 
 export function LoginPage() {
   const [hasLogged, setHasLogged] = React.useState(false)
+  const { auth, setAuth } = useAuth()
+
   const redirect = useRedirectParam()
 
   useRedirect()
@@ -34,6 +40,8 @@ export function LoginPage() {
 
       const auth = getFirebaseAuth()
       await signInWithEmailAndPassword(auth, email, password)
+      const tokens = await getTokens(cookies(), authConfig)
+      setAuth({ ...auth, tokens })
 
       setHasLogged(true)
     })

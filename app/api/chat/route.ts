@@ -61,6 +61,7 @@ export async function POST(request: Request) {
         }
       ]
     }
+    console.log('data', data)
     await kv.hmset(`chat:${id}`, data)
     await kv.zadd(`user:chat:${userId}`, {
       score: createdAt,
@@ -77,6 +78,7 @@ export async function POST(request: Request) {
           // console.log('data', JSON.stringify(data));
           if (data === '[DONE]') {
             controller.close()
+            console.log('Saving the response to KV')
             onCompletion(completeResponse)
             return
           }
