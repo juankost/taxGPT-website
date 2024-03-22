@@ -7,13 +7,12 @@ import { cn } from '@/lib/utils'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
-import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
-import { Tokens, getTokens } from 'next-firebase-auth-edge'
-import { cookies } from 'next/headers'
-import { User } from '@/app/auth/AuthContext'
-import { AuthProvider } from '@/app/auth/AuthProvider'
-import { authConfig } from '@/config/server-config'
-import { toUser } from '../lib/user'
+// import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
+// import { Tokens, getTokens } from 'next-firebase-auth-edge'
+// import { cookies } from 'next/headers'
+import { AuthProvider, getAuthenticationStatus } from '@/app/auth/AuthProvider'
+// import { authConfig } from '@/config/server-config'
+// import { toUser, toSession } from '../lib/user'
 
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
@@ -41,8 +40,9 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const tokens = await getTokens(cookies(), authConfig)
-  const user = tokens ? toUser(tokens) : null
+  // Initial
+  // const tokens = await getTokens(cookies(), authConfig)
+  // const user = tokens ? toUser(tokens) : null
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -61,7 +61,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <AuthProvider serverUser={user}>
+            <AuthProvider serverUser={null}>
               <Header />
               <main className="flex flex-col flex-1 bg-muted/50">
                 {children}
