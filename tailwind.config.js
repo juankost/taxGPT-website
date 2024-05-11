@@ -88,8 +88,19 @@ module.exports = {
           'slide-to-left 0.25s cubic-bezier(0.82, 0.085, 0.395, 0.895)',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
+      },
+      typography: {
+        'section_title': {
+          fontSize: '32px', // default size
+          lineHeight: '8',
+          fontWeight: 'bold',
+          '@screen md': {
+            fontSize: '32px',
+            lineHeight: '8',
+          }
+        }
       }
-    }
-  },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
+    },
+    plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
+  }
 }

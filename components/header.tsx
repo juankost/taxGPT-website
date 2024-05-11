@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { IconNextChat, IconSeparator } from '@/components/ui/icons'
 import { UserMenu } from '@/components/user-menu'
-import { SidebarMobile } from './sidebar-mobile'
-import { SidebarToggle } from './sidebar-toggle'
-import { ChatHistory } from './chat-history'
+import { SidebarMobile } from '@/components/sidebar-mobile'
+import { SidebarToggle } from '@/components/sidebar-toggle'
+import { ChatHistory } from '@/components/chat-history'
 import { useAuth } from '@/app/auth/AuthContext'
 
 export function Header() {

@@ -23,3 +23,21 @@
   font-size: 0.675rem;
   text-decoration: underline;
 }
+
+
+
+.oai-footer {
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6e6e80;
+  padding: 12px 0 24px;
+  flex: 0 0 auto
+}
+
+.separator:before {
+  content: " | ";
+  margin: 0 8px
+}
