@@ -75,13 +75,13 @@ export function PasswordForm({
               <VisibleIcon />
             </IconButton>
           )) || (
-            <IconButton
-              onClick={() => setIsHidden(true)}
-              className={styles.adornment}
-            >
-              <HiddenIcon />
-            </IconButton>
-          )}
+              <IconButton
+                onClick={() => setIsHidden(true)}
+                className={styles.adornment}
+              >
+                <HiddenIcon />
+              </IconButton>
+            )}
         </div>
         {error && <FormError>{error.message}</FormError>}
         <Button
@@ -90,7 +90,7 @@ export function PasswordForm({
           variant="contained"
           type="submit"
         >
-          Submit
+          Continue
         </Button>
       </form>
       {children}

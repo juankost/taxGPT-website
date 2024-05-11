@@ -5,10 +5,12 @@ import {
   redirectToLogin
 } from 'next-firebase-auth-edge'
 import { authConfig } from './config/server-config'
+import { nanoid } from '@/lib/utils'
 
 const PUBLIC_PATHS = ['/register', '/login', '/reset-password']
 
 export async function middleware(request: NextRequest) {
+
   return authMiddleware(request, {
     loginPath: '/api/login',
     logoutPath: '/api/logout',
@@ -20,11 +22,13 @@ export async function middleware(request: NextRequest) {
     debug: true,
     checkRevoked: true,
     handleValidToken: async ({ token, decodedToken }, headers) => {
-      // Authenticated user should not be able to access /login, /register and /reset-password routes
-      if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
-        return redirectToHome(request)
-      }
+      if (PUBLIC_PATHS.includes(request.nextUrl.pathname) || request.nextUrl.pathname === '/') {
+        const url = request.nextUrl.clone();
+        const id = nanoid()
+        url.pathname = `/chat/${id}`;
+        return NextResponse.redirect(url);
 
+      }
       return NextResponse.next({
         request: {
           headers
@@ -32,6 +36,10 @@ export async function middleware(request: NextRequest) {
       })
     },
     handleInvalidToken: async reason => {
+      if (PUBLIC_PATHS.includes(request.nextUrl.pathname) || request.nextUrl.pathname === '/') {
+        return NextResponse.next();  // no need to authenticate and can go to homepage
+      }
+
       console.info('Missing or malformed credentials', { reason })
       return redirectToLogin(request, {
         path: '/login',

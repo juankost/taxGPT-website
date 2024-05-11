@@ -7,13 +7,9 @@ import {
   User as FirebaseUser
 } from 'firebase/auth'
 import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
-import { AuthContext, User } from './AuthContext'
+import { AuthContext, User, getAuthenticationStatus } from './AuthContext'
 import { getFirebaseAuth } from './firebase'
 import { login, logout } from '@/app/auth'
-import { getTokens } from 'next-firebase-auth-edge'
-import { cookies } from 'next/headers'
-import { authConfig } from '@/config/server-config'
-import { toUser as toUserData } from '@/lib/user'
 
 export interface AuthProviderProps {
   serverUser: User | null
@@ -32,18 +28,6 @@ function toUser(user: FirebaseUser, idTokenResult: IdTokenResult): User {
 
 function toAuthTime(date: string) {
   return new Date(date).getTime() / 1000
-}
-
-export const getAuthenticationStatus = async () => {
-  try {
-    const authToken = await getTokens(cookies(), authConfig)
-    if (authToken) {
-      return toUserData(authToken)
-    }
-  } catch (error) {
-    console.error('Authentication status check failed:', error)
-  }
-  return null
 }
 
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
@@ -80,7 +64,8 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
 
     await logout()
     setUser(null)
-    window.location.reload()
+    window.location.href = '/'  // Redirect to homepage after logout
+    // window.location.reload()
   }
 
   const handleLogin = async (firebaseUser: FirebaseUser) => {

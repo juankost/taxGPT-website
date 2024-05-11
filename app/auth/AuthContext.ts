@@ -1,7 +1,11 @@
-'use client'
+// 'use client'
 import { createContext, useContext } from 'react'
 import { UserInfo } from 'firebase/auth'
 import { Claims } from 'next-firebase-auth-edge/lib/auth/claims'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+import { authConfig } from '@/config/server-config'
+import { toUser as toUserData } from '@/lib/user'
 
 export interface User extends UserInfo {
   emailVerified: boolean
@@ -20,3 +24,15 @@ export const AuthContext = createContext<AuthContextValue>({
 })
 
 export const useAuth = () => useContext(AuthContext)
+
+export const getAuthenticationStatus = async () => {
+  try {
+    const authToken = await getTokens(cookies(), authConfig)
+    if (authToken) {
+      return toUserData(authToken)
+    }
+  } catch (error) {
+    console.error('Authentication status check failed:', error)
+  }
+  return null
+}
