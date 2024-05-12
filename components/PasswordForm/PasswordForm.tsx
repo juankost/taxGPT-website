@@ -1,10 +1,10 @@
 import * as React from 'react'
 import styles from './PasswordForm.module.css'
-import { cx } from '../classNames'
+import { cx } from '../Common/classNames'
 import { Input } from '../Input'
 import { IconButton } from '../IconButton'
-import { VisibleIcon } from '../icons/VisibleIcon'
-import { HiddenIcon } from '../icons/HiddenIcon'
+import { VisibleIcon } from '../Icons/VisibleIcon'
+import { HiddenIcon } from '../Icons/HiddenIcon'
 import { Button } from '../Button'
 import { FirebaseError } from '@firebase/util'
 import { FormError } from '../FormError'
@@ -75,13 +75,13 @@ export function PasswordForm({
               <VisibleIcon />
             </IconButton>
           )) || (
-              <IconButton
-                onClick={() => setIsHidden(true)}
-                className={styles.adornment}
-              >
-                <HiddenIcon />
-              </IconButton>
-            )}
+            <IconButton
+              onClick={() => setIsHidden(true)}
+              className={styles.adornment}
+            >
+              <HiddenIcon />
+            </IconButton>
+          )}
         </div>
         {error && <FormError>{error.message}</FormError>}
         <Button

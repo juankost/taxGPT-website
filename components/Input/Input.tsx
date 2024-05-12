@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cx } from '../classNames'
+import { cx } from '../Common/classNames'
 
 export function Input({ ...props }: JSX.IntrinsicElements['input']) {
   // Adjusted base classes for input to match the button styles more closely

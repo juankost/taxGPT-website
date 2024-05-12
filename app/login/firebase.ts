@@ -24,7 +24,6 @@ export const getGoogleProvider = (auth: Auth) => {
   provider.setCustomParameters({
     display: 'popup'
   })
-
   return provider
 }
 

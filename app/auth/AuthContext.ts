@@ -1,6 +1,6 @@
 // 'use client'
 import { createContext, useContext } from 'react'
-import { UserInfo } from 'firebase/auth'
+import { UserInfo, Auth } from 'firebase/auth'
 import { Claims } from 'next-firebase-auth-edge/lib/auth/claims'
 import { getTokens } from 'next-firebase-auth-edge'
 import { cookies } from 'next/headers'

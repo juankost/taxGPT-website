@@ -1,15 +1,17 @@
 import * as React from 'react'
-import { LoadingIcon } from '../icons'
-import { cx } from '../classNames'
+import { LoadingIcon } from '../Icons'
+import { cx } from '../Common/classNames'
 
 export function Button({
   loading,
   children,
   variant = 'outlined',
+  center_text = false,
   ...props
 }: JSX.IntrinsicElements['button'] & {
   loading?: boolean
   variant?: 'contained' | 'outlined'
+  center_text?: boolean
 }) {
   // Define base classes for all buttons
   const baseClasses =
@@ -23,20 +25,30 @@ export function Button({
       'bg-transparent border border-gray-700 hover:border-gray-600 text-gray-700 hover:text-gray-800 focus:text-gray-800 active:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 focus:outline-none'
   }
 
+  // Give an option to still center the text in the outlined variant of the button
+  const centerTextClass = center_text ? 'justify-center' : ''
+
   // Conditional class for loading state
   const loadingClasses = loading ? 'opacity-50 cursor-not-allowed' : ''
-  const style = variant === 'contained' ? { backgroundColor: 'rgb(93,31,234)' } : {};
+  const style =
+    variant === 'contained' ? { backgroundColor: 'rgb(93,31,234)' } : {}
 
   // Combine classes
   const buttonClasses = cx(
     baseClasses,
     variantClassNames[variant],
     loadingClasses,
+    centerTextClass,
     props.className
   )
 
   return (
-    <button {...props} className={buttonClasses} style={style} disabled={loading}>
+    <button
+      {...props}
+      className={buttonClasses}
+      style={style}
+      disabled={loading}
+    >
       {loading && <LoadingIcon />} {/* Add styles to LoadingIcon as needed */}
       {children}
     </button>

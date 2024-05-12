@@ -1,5 +1,5 @@
 import styles from './IconButton.module.css'
-import { cx } from '../classNames'
+import { cx } from '../Common/classNames'
 
 export function IconButton(props: JSX.IntrinsicElements['button']) {
   return (
