@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 
 import { formatDate } from '@/lib/utils'
 import { getSharedChat } from '@/lib/chat_actions'
-import { ChatList } from '@/components/chat-list'
-import { FooterText } from '@/components/footer'
+import { ChatList } from '@/components/Chat/chat-list'
+import { FooterText } from '@/components/Chat/chat-footer'
 
 interface SharePageProps {
   params: {

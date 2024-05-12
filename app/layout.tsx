@@ -4,8 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 
 import '@/app/globals.css'
 import { cn } from '@/lib/utils'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { Providers } from '@/components/providers'
+import { Providers } from '@/components/Chat/providers'
 import { AuthProvider, getAuthenticationStatus } from '@/app/auth/AuthProvider'
 
 export const metadata = {
@@ -19,8 +18,7 @@ export const metadata = {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png'
-  },
-
+  }
 }
 
 export const viewport = {
@@ -58,9 +56,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </main>
             </AuthProvider>
           </div>
-          <TailwindIndicator />
         </Providers>
       </body>
-    </html >
+    </html>
   )
 }
