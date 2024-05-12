@@ -5,7 +5,6 @@ import { Button } from '../Button'
 import { IconGoogle } from '@/components/Common/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-
 import { PasswordFormValue } from '../PasswordForm/PasswordForm'
 import { FirebaseError } from '@firebase/util'
 
@@ -16,8 +15,7 @@ interface LoginMainContentProps {
   googleError: FirebaseError | undefined
   isGoogleLoading: boolean
   handleLoginWithGoogle: () => void
-  isEmailLinkLoading: boolean
-  handleLoginWithEmailLink: () => void
+  handleShowEmailLinkLogin: () => void
   redirect: string
   appendRedirectParam: (url: string, param: string) => string
 }
@@ -28,8 +26,7 @@ const LoginMainContent: React.FC<LoginMainContentProps> = ({
   googleError,
   isGoogleLoading,
   handleLoginWithGoogle,
-  isEmailLinkLoading,
-  handleLoginWithEmailLink,
+  handleShowEmailLinkLogin,
   redirect,
   appendRedirectParam
 }) => (
@@ -68,11 +65,7 @@ const LoginMainContent: React.FC<LoginMainContentProps> = ({
             </span>
             <span>Continue with Google</span>
           </Button>
-          <Button
-            loading={isEmailLinkLoading}
-            disabled={isEmailLinkLoading}
-            onClick={handleLoginWithEmailLink}
-          >
+          <Button onClick={handleShowEmailLinkLogin}>
             <span>
               <FontAwesomeIcon
                 icon={faEnvelope} // "envelope"
