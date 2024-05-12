@@ -3,12 +3,7 @@ import * as React from 'react'
 import { useLoadingCallback } from 'react-loading-hook'
 import { getGoogleProvider, loginWithProvider } from './firebase'
 import { PasswordFormValue } from '../../components/PasswordForm/PasswordForm'
-import {
-  isSignInWithEmailLink,
-  sendSignInLinkToEmail,
-  signInWithEmailAndPassword,
-  signInWithEmailLink
-} from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { getFirebaseAuth } from '../auth/firebase'
 import { appendRedirectParam } from '../../lib/redirect'
 import { useRedirect } from '../../lib/useRedirect'
@@ -22,9 +17,11 @@ import { AuthenticationFooter } from '@/components/Authentication/authentication
 import { AuthRedirecting } from '@/components/Authentication/authentication-redirecting'
 import { LoginMainContent } from '@/components/Authentication/login-main-content'
 import { useAuthHandlers } from '@/hooks/useAuthHandlers'
+import { LoginEmailLinkContent } from '@/components/Authentication/login-email-link'
 
 export function LoginPage() {
   const [hasLogged, setHasLogged] = React.useState(false)
+  const [showEmailLinkLogin, setShowEmailLinkLogin] = React.useState(false)
   const { auth, setAuth } = useAuth() // this is a hook to update the context after we have authenticated
   const redirect = useRedirectParam() // TODO (juan): understand the useRedirectParam hook and if we actually need it
   useRedirect() // TODO (juan): understand the useRedirect hook and if we actually need it
@@ -53,51 +50,19 @@ export function LoginPage() {
       setHasLogged(true)
     })
 
-  // Event handler for Email Link login
-  const [handleLoginWithEmailLink, isEmailLinkLoading, emailLinkError] =
-    useLoadingCallback(async () => {
-      const auth = getFirebaseAuth()
-      const email = window.prompt('Please provide your email')
-      if (!email) {
-        return
-      }
-      window.localStorage.setItem('emailForSignIn', email)
-      await sendSignInLinkToEmail(auth, email, {
-        url: process.env.NEXT_PUBLIC_SERVER_URL + '/login',
-        handleCodeInApp: true
-      })
-    })
-
-  async function handleLoginWithEmailLinkCallback() {
-    const auth = getFirebaseAuth()
-    if (!isSignInWithEmailLink(auth, window.location.href)) {
-      return
-    }
-
-    let email = window.localStorage.getItem('emailForSignIn')
-    if (!email) {
-      email = window.prompt('Please provide your email for confirmation')
-    }
-
-    if (!email) {
-      return
-    }
-
-    setHasLogged(false)
-    await signInWithEmailLink(auth, email, window.location.href)
-    window.localStorage.removeItem('emailForSignIn')
-    setHasLogged(true)
+  const handleShowEmailLinkLogin = () => {
+    setShowEmailLinkLogin(true)
   }
-
-  React.useEffect(() => {
-    handleLoginWithEmailLinkCallback()
-  }, [])
 
   return (
     <div className="flex flex-col justify-between min-h-screen ">
       <AuthenticationHeader />
       {hasLogged ? (
         <AuthRedirecting />
+      ) : showEmailLinkLogin ? (
+        <LoginEmailLinkContent
+          onBackToLogin={() => setShowEmailLinkLogin(false)}
+        />
       ) : (
         <LoginMainContent
           isEmailLoading={isEmailLoading}
@@ -106,8 +71,7 @@ export function LoginPage() {
           googleError={googleError}
           isGoogleLoading={isGoogleLoading}
           handleLoginWithGoogle={handleLoginWithGoogle}
-          isEmailLinkLoading={isEmailLinkLoading}
-          handleLoginWithEmailLink={handleLoginWithEmailLink}
+          handleShowEmailLinkLogin={() => handleShowEmailLinkLogin()}
           redirect={redirect || ''}
           appendRedirectParam={appendRedirectParam}
         />

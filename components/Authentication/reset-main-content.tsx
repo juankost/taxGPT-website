@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { Button } from '../../components/Button'
 import { FormError } from '../../components/FormError'
 import { Input } from '../../components/Input'
-import { MainTitle } from '../../components/MainTitle'
 import { appendRedirectParam } from '../../lib/redirect'
 
 interface ResetPasswordMainContentProps {
