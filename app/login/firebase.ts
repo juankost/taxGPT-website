@@ -4,7 +4,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
-  useDeviceLanguage
+  useDeviceLanguage,
+  UserCredential
 } from 'firebase/auth'
 
 const CREDENTIAL_ALREADY_IN_USE_ERROR = 'auth/credential-already-in-use'
@@ -30,12 +31,12 @@ export const getGoogleProvider = (auth: Auth) => {
 export const loginWithProvider = async (
   auth: Auth,
   provider: AuthProvider
-): Promise<User> => {
+): Promise<UserCredential> => {
   const result = await signInWithPopup(
     auth,
     provider,
     browserPopupRedirectResolver
   )
 
-  return result.user
+  return result
 }

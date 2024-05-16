@@ -1,7 +1,6 @@
-import {useSearchParams} from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
 
 export function useRedirectParam(): string | null {
-  const params = useSearchParams();
-
-  return params?.get('redirect') ?? null;
+  const params = useSearchParams()
+  return params?.get('redirect') ?? null
 }

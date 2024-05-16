@@ -1,5 +1,4 @@
 'use client'
-
 import * as React from 'react'
 import {
   IdTokenResult,
@@ -10,24 +9,11 @@ import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
 import { AuthContext, User, getAuthenticationStatus } from './AuthContext'
 import { getFirebaseAuth } from './firebase'
 import { login, logout } from '@/app/auth'
+import { toAuthTime, toUserFromCredentials } from '@/lib/user'
 
 export interface AuthProviderProps {
   serverUser: User | null
   children: React.ReactNode
-}
-
-function toUser(user: FirebaseUser, idTokenResult: IdTokenResult): User {
-  return {
-    ...user,
-    emailVerified:
-      user.emailVerified || (idTokenResult.claims.email_verified as boolean),
-    customClaims: filterStandardClaims(idTokenResult.claims),
-    authTime: toAuthTime(idTokenResult.issuedAtTime)
-  }
-}
-
-function toAuthTime(date: string) {
-  return new Date(date).getTime() / 1000
 }
 
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
@@ -64,7 +50,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
 
     await logout()
     setUser(null)
-    window.location.href = '/'  // Redirect to homepage after logout
+    window.location.href = '/' // Redirect to homepage after logout
     // window.location.reload()
   }
 
@@ -79,7 +65,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
     }
 
     await login(idTokenResult.token)
-    setUser(toUser(firebaseUser, idTokenResult))
+    setUser(toUserFromCredentials(firebaseUser, idTokenResult))
   }
 
   const handleIdTokenChanged = async (firebaseUser: FirebaseUser | null) => {
