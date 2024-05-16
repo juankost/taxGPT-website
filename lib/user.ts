@@ -2,6 +2,7 @@ import { Tokens } from 'next-firebase-auth-edge'
 import { User } from '../app/auth/AuthContext'
 import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
 import { type DefaultSession } from 'next-auth'
+import { IdTokenResult, User as FirebaseUser } from 'firebase/auth'
 
 interface Session {
   user: {
@@ -10,7 +11,24 @@ interface Session {
   } & DefaultSession['user']
 }
 
-export const toUser = ({ decodedToken }: Tokens): User => {
+export const toAuthTime = (date: string): number => {
+  return new Date(date).getTime() / 1000
+}
+
+export const toUserFromCredentials = (
+  user: FirebaseUser,
+  idTokenResult: IdTokenResult
+): User => {
+  return {
+    ...user,
+    emailVerified:
+      user.emailVerified || (idTokenResult.claims.email_verified as boolean),
+    customClaims: filterStandardClaims(idTokenResult.claims),
+    authTime: toAuthTime(idTokenResult.issuedAtTime)
+  }
+}
+
+export const toUserFromToken = ({ decodedToken }: Tokens): User => {
   const {
     uid,
     email,

@@ -5,7 +5,7 @@ import { Claims } from 'next-firebase-auth-edge/lib/auth/claims'
 import { getTokens } from 'next-firebase-auth-edge'
 import { cookies } from 'next/headers'
 import { authConfig } from '@/config/server-config'
-import { toUser as toUserData } from '@/lib/user'
+import { toUserFromToken } from '@/lib/user'
 
 export interface User extends UserInfo {
   emailVerified: boolean
@@ -29,7 +29,7 @@ export const getAuthenticationStatus = async () => {
   try {
     const authToken = await getTokens(cookies(), authConfig)
     if (authToken) {
-      return toUserData(authToken)
+      return toUserFromToken(authToken)
     }
   } catch (error) {
     console.error('Authentication status check failed:', error)

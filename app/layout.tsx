@@ -5,7 +5,7 @@ import { GeistMono } from 'geist/font/mono'
 import '@/app/globals.css'
 import { cn } from '@/lib/utils'
 import { Providers } from '@/components/Chat/providers'
-import { AuthProvider, getAuthenticationStatus } from '@/app/auth/AuthProvider'
+import { AuthProvider } from '@/app/auth/AuthProvider'
 
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
@@ -16,8 +16,7 @@ export const metadata = {
   description: 'An AI-powered chatbot to help you understand the tax law.',
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png'
+    shortcut: '/favicon-16x16.png'
   }
 }
 

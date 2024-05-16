@@ -52,10 +52,7 @@ const Home: NextPage = () => {
                 className="relative flex h-12 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-[#fff] hover:bg-[#0000FF]"
                 disabled={loading.login}
               >
-                {/* {loading.login ? <LoadingIcon /> : "Log in"} */}
-                {loading.login
-                  ? (console.log('Loading...'), (<LoadingIcon />))
-                  : 'Log in'}
+                {loading.login ? <LoadingIcon /> : 'Log in'}
               </button>
               <button
                 onClick={() => handleRedirect(`/register`)}
