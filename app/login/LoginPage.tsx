@@ -1,8 +1,8 @@
 'use client'
 import * as React from 'react'
-import { getGoogleProvider, loginWithProvider } from './firebase'
+import { getGoogleProvider, loginWithProvider } from '@/app/auth/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { getFirebaseAuth } from '../auth/firebase'
+import { getFirebaseAuth } from '@/app/auth/firebase'
 import { login } from '@/app/auth'
 
 import { nanoid } from 'nanoid'
