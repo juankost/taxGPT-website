@@ -43,7 +43,6 @@ export async function middleware(request: NextRequest) {
       ) {
         return NextResponse.next() // no need to authenticate and can go to homepage
       }
-
       console.info('Missing or malformed credentials', { reason })
       return redirectToLogin(request, {
         path: '/login',

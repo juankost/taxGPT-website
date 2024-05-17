@@ -12,8 +12,10 @@ import {
 import { useLoadingCallback } from 'react-loading-hook'
 import { useRouter } from 'next/navigation'
 import { signOut } from 'firebase/auth'
+import { logout } from '@/app/auth/'
 import { getFirebaseAuth } from '@/app/auth/firebase'
 import { useAuth } from '@/app/auth/AuthContext'
+import { useRedirectAfterLogout } from '@/lib/userRedirectAfterLogin'
 
 function getUserInitials(name: string) {
   const [firstName, lastName] = name.split(' ')
@@ -23,13 +25,14 @@ function getUserInitials(name: string) {
 // export function UserMenu(userData: User) {
 export function UserMenu() {
   const { user, setUser } = useAuth()
-  const router = useRouter()
-  const [hasLoggedOut, setHasLoggedOut] = React.useState(false)
+  const redirectAfterLogout = useRedirectAfterLogout() // Call the hook at the top level
+
   const [handleLogout, isLogoutLoading] = useLoadingCallback(async () => {
     const auth = getFirebaseAuth()
     await signOut(auth)
-    setHasLoggedOut(true)
+    await logout()
     setUser(null)
+    redirectAfterLogout()
   })
 
   return (

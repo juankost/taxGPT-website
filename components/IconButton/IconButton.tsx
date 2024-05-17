@@ -1,7 +1,7 @@
 import styles from './IconButton.module.css'
 import { cx } from '../Common/classNames'
 
-export function IconButton(props: JSX.IntrinsicElements['button']) {
+const IconButton = (props: JSX.IntrinsicElements['button']) => {
   return (
     <button
       {...props}
@@ -10,3 +10,4 @@ export function IconButton(props: JSX.IntrinsicElements['button']) {
     />
   )
 }
+export { IconButton }

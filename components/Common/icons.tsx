@@ -4,90 +4,6 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-function IconNextChat({
-  className,
-  inverted,
-  ...props
-}: React.ComponentProps<'svg'> & { inverted?: boolean }) {
-  const id = React.useId()
-
-  return (
-    <svg
-      viewBox="0 0 17 17"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn('size-4', className)}
-      {...props}
-    >
-      <defs>
-        <linearGradient
-          id={`gradient-${id}-1`}
-          x1="10.6889"
-          y1="10.3556"
-          x2="13.8445"
-          y2="14.2667"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor={inverted ? 'white' : 'black'} />
-          <stop
-            offset={1}
-            stopColor={inverted ? 'white' : 'black'}
-            stopOpacity={0}
-          />
-        </linearGradient>
-        <linearGradient
-          id={`gradient-${id}-2`}
-          x1="11.7555"
-          y1="4.8"
-          x2="11.7376"
-          y2="9.50002"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor={inverted ? 'white' : 'black'} />
-          <stop
-            offset={1}
-            stopColor={inverted ? 'white' : 'black'}
-            stopOpacity={0}
-          />
-        </linearGradient>
-      </defs>
-      <path
-        d="M1 16L2.58314 11.2506C1.83084 9.74642 1.63835 8.02363 2.04013 6.39052C2.4419 4.75741 3.41171 3.32057 4.776 2.33712C6.1403 1.35367 7.81003 0.887808 9.4864 1.02289C11.1628 1.15798 12.7364 1.8852 13.9256 3.07442C15.1148 4.26363 15.842 5.83723 15.9771 7.5136C16.1122 9.18997 15.6463 10.8597 14.6629 12.224C13.6794 13.5883 12.2426 14.5581 10.6095 14.9599C8.97637 15.3616 7.25358 15.1692 5.74942 14.4169L1 16Z"
-        fill={inverted ? 'black' : 'white'}
-        stroke={inverted ? 'black' : 'white'}
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <mask
-        id="mask0_91_2047"
-        style={{ maskType: 'alpha' }}
-        maskUnits="userSpaceOnUse"
-        x={1}
-        y={0}
-        width={16}
-        height={16}
-      >
-        <circle cx={9} cy={8} r={8} fill={inverted ? 'black' : 'white'} />
-      </mask>
-      <g mask="url(#mask0_91_2047)">
-        <circle cx={9} cy={8} r={8} fill={inverted ? 'black' : 'white'} />
-        <path
-          d="M14.2896 14.0018L7.146 4.8H5.80005V11.1973H6.87681V6.16743L13.4444 14.6529C13.7407 14.4545 14.0231 14.2369 14.2896 14.0018Z"
-          fill={`url(#gradient-${id}-1)`}
-        />
-        <rect
-          x="11.2222"
-          y="4.8"
-          width="1.06667"
-          height="6.4"
-          fill={`url(#gradient-${id}-2)`}
-        />
-      </g>
-    </svg>
-  )
-}
-
 function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
@@ -100,39 +16,6 @@ function IconOpenAI({ className, ...props }: React.ComponentProps<'svg'>) {
     >
       <title>OpenAI icon</title>
       <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
-    </svg>
-  )
-}
-
-function IconVercel({ className, ...props }: React.ComponentProps<'svg'>) {
-  return (
-    <svg
-      aria-label="Vercel logomark"
-      role="img"
-      viewBox="0 0 74 64"
-      className={cn('size-4', className)}
-      {...props}
-    >
-      <path
-        d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z"
-        fill="currentColor"
-      ></path>
-    </svg>
-  )
-}
-
-function IconGitHub({ className, ...props }: React.ComponentProps<'svg'>) {
-  return (
-    <svg
-      role="img"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      className={cn('size-4', className)}
-      {...props}
-    >
-      <title>GitHub</title>
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
     </svg>
   )
 }
@@ -479,15 +362,25 @@ function IconChevronUpDown({
 function IconTaxIntelligence({
   className,
   inverted,
-  textColor = 'white', // Default color is white
   size = { width: '216', height: '41' }, // Default size
+  theme = 'light', // Default theme
   ...props
 }: React.ComponentProps<'svg'> & {
   inverted?: boolean
-  textColor?: string
   size?: { width: string; height: string }
+  theme?: string | undefined
 }) {
   const id = React.useId()
+
+  // Determine fill and background colors based on theme and inverted flag
+  const fillColor =
+    (theme === 'dark' && !inverted) || (theme === 'light' && inverted)
+      ? 'white'
+      : 'black'
+  const backgroundColor =
+    (theme === 'dark' && !inverted) || (theme === 'light' && inverted)
+      ? 'bg-muted/50'
+      : 'white'
 
   return (
     <svg
@@ -498,9 +391,8 @@ function IconTaxIntelligence({
       height={size.height}
       viewBox="0 0 650 128"
       xmlSpace="preserve"
+      style={{ backgroundColor }} // Set background color
     >
-      <desc>Created with Fabric.js 5.3.0</desc>
-      <defs></defs>
       <g
         transform="matrix(0.7076377557 0 0 0.7076377557 80 66.4852956397)"
         id="nl4eLQV_ctWEop5-a-1x5"
@@ -545,7 +437,7 @@ function IconTaxIntelligence({
             strokeDashoffset: '0',
             strokeLinejoin: 'miter',
             strokeMiterlimit: '4',
-            fill: textColor,
+            fill: fillColor, // Use fillColor based on theme
             fillRule: 'nonzero',
             opacity: '1',
             whiteSpace: 'pre'
@@ -555,57 +447,6 @@ function IconTaxIntelligence({
             Tax Intelligence
           </tspan>
         </text>
-      </g>
-    </svg>
-  )
-}
-
-function IconTaxIntelligenceSymbol({
-  className,
-  inverted,
-  textColor = 'white', // Default color is white
-  size = { width: '216', height: '41' }, // Default size
-  ...props
-}: React.ComponentProps<'svg'> & {
-  inverted?: boolean
-  textColor?: string
-  size?: { width: string; height: string }
-}) {
-  const id = React.useId()
-
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      version="1.1"
-      width={size.width}
-      height={size.height}
-      viewBox="0 0 650 128"
-      xmlSpace="preserve"
-    >
-      <desc>Created with Fabric.js 5.3.0</desc>
-      <defs></defs>
-      <g
-        transform="matrix(0.7076377557 0 0 0.7076377557 80 66.4852956397)"
-        id="nl4eLQV_ctWEop5-a-1x5"
-      >
-        <path
-          style={{
-            stroke: 'none',
-            strokeWidth: '1',
-            strokeDasharray: 'none',
-            strokeLinecap: 'butt',
-            strokeDashoffset: '0',
-            strokeLinejoin: 'miter',
-            strokeMiterlimit: '4',
-            fill: 'rgb(93,31,234)',
-            fillRule: 'nonzero',
-            opacity: '1'
-          }}
-          transform=" translate(-105.1159029834, -91.0200402426)"
-          d="M 75.7 135.18 Q 74.9 133.38 72.85 133.45 Q 63.32 133.78 54.55 133.36 C 52.889192365470336 133.27664748091868 51.4953073457732 132.08423846701848 51.16 130.46 Q 42.1 86.55 32.7 42.47 Q 31.63 37.46 36.49 36.98 C 80.9 32.53 126.49 27.38 170 22.98 Q 173.04 22.67 176.04 22.87 C 177.10374920911414 22.93786411745465 177.95145772850603 23.781291280687974 178.02 24.84 Q 178.15 26.87 177.9 28.76 Q 177.05 35.24 176.01 41.88 C 174.87 49.15 174.11 57.65 172.96 65.4 C 171.9 72.55 171.11 79.79 169.98 86.9 C 168.4 96.81 167.37 106.69 166.15 116.5 Q 165.65 120.53 161.58 120.56 Q 146.2 120.67 130.1 120.74 Q 127.11 120.76 124.71 122.42 Q 120.48 125.35 116.81 128.17 Q 96.72 143.62 77.36 158.21 C 75.95 159.28 74.06 159.6 72.42 159.03 C 71.37451915419282 158.6601102747964 70.77810332901237 157.5623594081599 71.04 156.49 L 75.83 136.57 C 75.9403724095281 136.10286373708527 75.89468459657303 135.61435558318104 75.7 135.18 Z"
-          strokeLinecap="round"
-        />
       </g>
     </svg>
   )
@@ -646,37 +487,141 @@ function IconGoogle({
   )
 }
 
-function IconEmail({
+function IconTaxLogo({
   className,
-  stroke = '#333333', // Default stroke color
-  fill = 'none', // Default fill color
+  width = 128,
+  height = 128,
   ...props
-}: React.ComponentProps<'svg'> & { stroke?: string; fill?: string }) {
+}: React.ComponentProps<'svg'> & { width?: number; height?: number }) {
   const id = React.useId()
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill={fill}
-      stroke={stroke}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`feather feather-mail ${className}`}
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      xmlSpace="preserve"
+      version="1.1"
+      width={width}
+      height={height}
+      viewBox="0 0 128 128"
+      className={className}
+      {...props}
     >
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-.9 0-2-.9-2-2V6c0-1.1 1.1-2 2-2z"></path>
-      <polyline points="22,6 12,13 2,6"></polyline>
+      <g
+        transform="matrix(0.8793773068 0 0 0.9376121403 64 64.4688)"
+        id="nl4eLQV_ctWEop5-a-1x5"
+      >
+        <path
+          style={{
+            stroke: 'none',
+            strokeWidth: 1,
+            strokeDasharray: 'none',
+            strokeLinecap: 'butt',
+            strokeDashoffset: 0,
+            strokeLinejoin: 'miter',
+            strokeMiterlimit: 4,
+            fill: 'rgb(93,31,234)',
+            fillRule: 'nonzero',
+            opacity: 1
+          }}
+          transform=" translate(0, 0)"
+          d="M -29.5857 44.12993 C -30.11903 42.92993 -31.069029999999998 42.35326 -32.4357 42.399930000000005 C -38.78903 42.619930000000004 -44.88903 42.58993 -50.735699999999994 42.30993 C -52.39650999999999 42.22658 -53.790389999999995 41.03417 -54.125699999999995 39.40993 C -60.165699999999994 10.136600000000001 -66.31903 -19.193399999999997 -72.5857 -48.58006999999999 C -73.29903 -51.920069999999996 -72.0357 -53.750069999999994 -68.7957 -54.070069999999994 C -24.3857 -58.52007 21.204300000000003 -63.670069999999996 64.7143 -68.07006999999999 C 66.74096999999999 -68.27673999999999 68.7543 -68.31339999999999 70.7543 -68.18006999999999 C 71.81805 -68.11220999999999 72.66576 -67.26877999999999 72.7343 -66.21006999999999 C 72.82097 -64.85673999999999 72.78097000000001 -63.55006999999999 72.6143 -62.290069999999986 C 72.04763 -57.970069999999986 71.41763 -53.59673999999998 70.7243 -49.17006999999999 C 69.5843 -41.900069999999985 68.8243 -33.400069999999985 67.6743 -25.65006999999999 C 66.6143 -18.500069999999987 65.82430000000001 -11.260069999999988 64.6943 -4.150069999999989 C 63.1143 5.759930000000011 62.0843 15.63993000000001 60.8643 25.449930000000013 C 60.53097 28.136600000000012 59.00763 29.48993000000001 56.2943 29.50993000000001 C 46.04097 29.58326000000001 35.54763 29.643260000000012 24.8143 29.68993000000001 C 22.82097 29.70326000000001 21.0243 30.26326000000001 19.4243 31.36993000000001 C 16.6043 33.32326000000001 13.970969999999998 35.23993000000001 11.524299999999998 37.11993000000001 C -1.8690300000000022 47.41993000000001 -15.019030000000003 57.43326000000001 -27.925700000000006 67.15993 C -29.335700000000006 68.22993 -31.225700000000007 68.54993 -32.865700000000004 67.97993 C -33.91118 67.61004 -34.507600000000004 66.51229 -34.24570000000001 65.43992999999999 L -29.455700000000007 45.51992999999999 C -29.345330000000008 45.05278999999999 -29.391020000000008 44.564289999999986 -29.585700000000006 44.12992999999999 z"
+          stroke-linecap="round"
+        />
+      </g>
+    </svg>
+  )
+}
+
+function IconHome({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      {...props}
+      className={`inline-flex w-6 h-6 ${className || ''}`.trim()}
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+    </svg>
+  )
+}
+
+function IconHidden({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`inline-flex w-6 h-6 ${className || ''}`.trim()}
+      {...props}
+    >
+      <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
+    </svg>
+  )
+}
+
+function IconVisible({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+      className={`inline-flex w-6 h-6 ${className || ''}`.trim()}
+    >
+      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />{' '}
+    </svg>
+  )
+}
+
+function IconLoading({ className, ...props }: React.ComponentProps<'svg'>) {
+  return (
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      width="24px"
+      height="24px"
+      viewBox="0 0 40 40"
+      enableBackground="new 0 0 40 40"
+      xmlSpace="preserve"
+      {...props}
+      className={`inline-flex w-6 h-6 ${className || ''}`.trim()}
+    >
+      <path
+        opacity="0.2"
+        fill="currentColor"
+        d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"
+      />
+      <path
+        fill="currentColor"
+        d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z"
+      >
+        <animateTransform
+          attributeType="xml"
+          attributeName="transform"
+          type="rotate"
+          from="0 20 20"
+          to="360 20 20"
+          dur="0.5s"
+          repeatCount="indefinite"
+        />
+      </path>
     </svg>
   )
 }
 
 export {
   IconEdit,
-  IconNextChat,
   IconOpenAI,
-  IconVercel,
-  IconGitHub,
   IconSeparator,
   IconArrowDown,
   IconArrowRight,
@@ -701,5 +646,9 @@ export {
   IconChevronUpDown,
   IconTaxIntelligence,
   IconGoogle,
-  IconEmail
+  IconTaxLogo,
+  IconHome,
+  IconHidden,
+  IconVisible,
+  IconLoading
 }

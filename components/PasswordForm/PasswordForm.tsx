@@ -2,13 +2,11 @@ import * as React from 'react'
 import styles from './PasswordForm.module.css'
 import { cx } from '../Common/classNames'
 import { Input } from '../Input'
-import { IconButton } from '../IconButton'
-import { VisibleIcon } from '../Icons/VisibleIcon'
-import { HiddenIcon } from '../Icons/HiddenIcon'
+import { IconButton } from '@/components/IconButton/IconButton'
 import { Button } from '../Button'
 import { FirebaseError } from '@firebase/util'
 import { FormError } from '../FormError'
-
+import { IconVisible, IconHidden } from '@/components/Common/icons'
 export interface PasswordFormValue {
   email: string
   password: string
@@ -72,14 +70,19 @@ export function PasswordForm({
               onClick={() => setIsHidden(false)}
               className={styles.adornment}
             >
-              <VisibleIcon />
+              <span>
+                <IconVisible />
+              </span>
             </IconButton>
           )) || (
             <IconButton
               onClick={() => setIsHidden(true)}
               className={styles.adornment}
             >
-              <HiddenIcon />
+              {/* This makes the icon larger, so we keep the span */}
+              <span>
+                <IconHidden />
+              </span>
             </IconButton>
           )}
         </div>

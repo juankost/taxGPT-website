@@ -2,16 +2,18 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/Common/button'
-import { IconNextChat, IconSeparator } from '@/components/Common/icons'
+import { IconSeparator, IconTaxLogo, IconHome } from '@/components/Common/icons'
 import { UserMenu } from '@/components/Chat/chat-user-menu'
 import { SidebarMobile } from '@/components/Sidebar/sidebar-mobile'
 import { SidebarToggle } from '@/components/Sidebar/sidebar-toggle'
 import { ChatHistory } from '@/components/Chat/chat-history'
 import { useAuth } from '@/app/auth/AuthContext'
+import { useRedirect } from '@/lib/useRedirect'
 
 export function Header() {
   // Use a state to read the user from the context
   const { user } = useAuth()
+  // useRedirect()
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 border-b shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
@@ -26,8 +28,8 @@ export function Header() {
             </>
           ) : (
             <Link href="/" target="_blank" rel="nofollow">
-              <IconNextChat className="size-6 mr-2 dark:hidden" inverted />
-              <IconNextChat className="hidden size-6 mr-2 dark:block" />
+              {/* <IconHome className="size-6 mr-2 dark:hidden" inverted /> */}
+              <IconHome className="hidden size-6 mr-2 dark:block" />
             </Link>
           )}
           <div className="flex items-center">
@@ -44,11 +46,8 @@ export function Header() {
       </div>
       <div className="flex justify-center w-1/2">
         <h1 className="text-3xl font-bold">TaxIntelligence</h1>{' '}
-        {/* Adjust text size as needed */}
       </div>
-      <div className="flex justify-end w-1/4">
-        {/* Placeholder for balance, can put other elements if needed */}
-      </div>
+      <div className="flex justify-end w-1/4"></div>
     </header>
   )
 }
