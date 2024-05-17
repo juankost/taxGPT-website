@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LoadingIcon } from '../Icons'
+import { IconLoading } from '@/components/Common/icons'
 import { cx } from '../Common/classNames'
 
 export function Button({
@@ -49,7 +49,7 @@ export function Button({
       style={style}
       disabled={loading}
     >
-      {loading && <LoadingIcon />} {/* Add styles to LoadingIcon as needed */}
+      {loading && <IconLoading />}
       {children}
     </button>
   )

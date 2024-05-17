@@ -2,7 +2,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { LoadingIcon } from '@/components/Icons'
+import { IconLoading } from '@/components/Common/icons'
 import { nanoid } from 'nanoid'
 import { IconTaxIntelligence } from '@/components/Common/icons'
 
@@ -52,21 +52,21 @@ const Home: NextPage = () => {
                 className="relative flex h-12 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-[#fff] hover:bg-[#0000FF]"
                 disabled={loading.login}
               >
-                {loading.login ? <LoadingIcon /> : 'Log in'}
+                {loading.login ? <IconLoading /> : 'Log in'}
               </button>
               <button
                 onClick={() => handleRedirect(`/register`)}
                 className="relative flex h-12 items-center justify-center rounded-md text-center text-base font-medium bg-[#3C46FF] text-[#fff] hover:bg-[#0000FF]"
                 disabled={loading.login}
               >
-                {loading.login ? <LoadingIcon /> : 'Sign up'}
+                {loading.login ? <IconLoading /> : 'Sign up'}
               </button>
             </div>
           </div>
         </div>
         <div className="items-center mt-10 flex flex-col justify-center">
           <div className="flex justify-center text-gray-300 md:mb-3">
-            <IconTaxIntelligence />
+            <IconTaxIntelligence inverted />
           </div>
           <div className="items-center flex gap-3 py-0 text-xs text-token-text-tertiary">
             <a href="#" className="cursor-pointer font-normal underline">

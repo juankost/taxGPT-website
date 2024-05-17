@@ -75,16 +75,15 @@ export async function POST(request: Request) {
       function onParse(event: ParsedEvent | ReconnectInterval) {
         if (event.type === 'event') {
           const data = event.data
-          // console.log('data', JSON.stringify(data));
           if (data === '[DONE]') {
             controller.close()
-            console.log('Saving the response to KV')
             onCompletion(completeResponse)
             return
           }
           try {
             const queue = encoder.encode(data)
             controller.enqueue(queue)
+            completeResponse += data // Accumulate the data directly
             counter++
           } catch (e) {
             controller.error(e)
@@ -93,10 +92,14 @@ export async function POST(request: Request) {
       }
 
       const parser = createParser(onParse)
-      for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk))
-        completeResponse += decoder.decode(chunk)
+      const reader = res.body?.getReader()
+      let decoder = new TextDecoder()
+      let { value, done } = await reader!.read()
+      while (!done) {
+        parser.feed(decoder.decode(value, { stream: true }))
+        ;({ value, done } = await reader!.read())
       }
+      parser.feed(decoder.decode(value)) // Final decode without stream option
     }
   })
 

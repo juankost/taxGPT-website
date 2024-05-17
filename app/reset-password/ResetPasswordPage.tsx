@@ -8,11 +8,13 @@ import { useRedirectParam } from '@/lib/useRedirectParam'
 import { AuthenticationHeader } from '@/components/Authentication/authentication-header'
 import { AuthenticationFooter } from '@/components/Authentication/authentication-footer'
 import { ResetPasswordMainContent } from '@/components/Authentication/reset-main-content'
+import { useTheme } from 'next-themes'
 
 export function ResetPasswordPage() {
   const [email, setEmail] = React.useState('')
   const [isSent, setIsSent] = React.useState(false)
   const redirect = useRedirectParam()
+  const { resolvedTheme } = useTheme()
   const [sendResetInstructions, loading, error] = useLoadingCallback(
     async (event: React.FormEvent) => {
       event.preventDefault()
@@ -31,7 +33,7 @@ export function ResetPasswordPage() {
 
   return (
     <div className="flex flex-col justify-between min-h-screen ">
-      <AuthenticationHeader />
+      <AuthenticationHeader theme={resolvedTheme} />
       <ResetPasswordMainContent
         email={email}
         setEmail={setEmail}

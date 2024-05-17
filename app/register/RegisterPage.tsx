@@ -20,18 +20,23 @@ import { useRedirectAfterLogin } from '@/lib/userRedirectAfterLogin'
 import { useAuth } from '@/app/auth/AuthContext'
 import { toUserFromCredentials } from '@/lib/user'
 import { login } from '@/app/auth'
+import { useTheme } from 'next-themes'
+import { logout as logoutCookie } from '@/app/auth'
+import { logout as logoutProvider } from '@/app/auth/firebase'
+import { EmailVerificationDialog } from '@/components/Authentication/email-not-verified-popup'
 
 export function RegisterPage() {
   const [hasLogged, setHasLogged] = React.useState(false)
   const { user, setUser } = useAuth() // this is a hook to update the context after we have authenticated
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const { resolvedTheme } = useTheme()
 
   // This checks in the URL if we already specified where we want to redirect
   // If authenticated, redirect to new chat
   const definedRedirectPath = useRedirectParam()
   const newChatRedirectPath = `/chat/${nanoid()}`
   const redirectPath = definedRedirectPath || newChatRedirectPath
-  // const redirectAfterLogin = useRedirectAfterLogin(redirectPath)
-  // useRedirect(redirectPath) // should already be done by the middleware
+  const redirectAfterRegister = useRedirectAfterLogin('/')
 
   const [registerWithEmailAndPassword, isRegisterLoading, error] =
     useLoadingCallback(async ({ email, password }: PasswordFormValue) => {
@@ -43,16 +48,7 @@ export function RegisterPage() {
         password
       )
       await sendEmailVerification(credential.user)
-      // Listen for the user's email verification status
-      const unsubscribe = onAuthStateChanged(auth, async user => {
-        if (user && user.emailVerified) {
-          // Set user as logged in only after email is verified
-          setHasLogged(true)
-          unsubscribe() // Stop listening to auth state changes
-          // Redirect after email verification
-          useRedirect(redirectPath)
-        }
-      })
+      setIsModalOpen(true) // Open the modal
     })
 
   const [handleRegisterWithGoogle, isGoogleLoading, googleError] =
@@ -65,9 +61,17 @@ export function RegisterPage() {
       setUser(toUserFromCredentials(credential.user, idTokenResult)) // Update context with user info
       useRedirect(redirectPath)
     })
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    logoutProvider(getFirebaseAuth())
+    logoutCookie()
+    redirectAfterRegister()
+  }
+
   return (
     <div className="flex flex-col justify-between min-h-screen ">
-      <AuthenticationHeader />
+      <AuthenticationHeader theme={resolvedTheme} />
       {hasLogged ? (
         <AuthRedirecting />
       ) : (
@@ -80,6 +84,7 @@ export function RegisterPage() {
         />
       )}
       <AuthenticationFooter />
+      <EmailVerificationDialog isOpen={isModalOpen} onClose={closeModal} />
     </div>
   )
 }

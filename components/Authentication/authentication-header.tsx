@@ -1,11 +1,11 @@
 import React from 'react'
 import { IconTaxIntelligence } from '@/components/Common/icons'
 
-const AuthenticationHeader = () => (
+const AuthenticationHeader = ({ theme }: { theme: string | undefined }) => (
   <header>
-    <div className="flex justify-center align-center bg-white pt-10">
+    <div className="flex justify-center align-center pt-10">
       <IconTaxIntelligence
-        textColor="black"
+        theme={theme}
         size={{ width: '400', height: '90' }}
       />
     </div>

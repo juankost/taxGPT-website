@@ -10,3 +10,13 @@ export function useRedirectAfterLogin(redirectPath: string = '/') {
     // router.refresh()
   }
 }
+
+export function useRedirectAfterLogout(redirectPath: string = '/') {
+  const router = useRouter()
+  const redirect = useRedirectParam()
+
+  return function () {
+    router.push(redirect ?? redirectPath)
+    // router.refresh()
+  }
+}
