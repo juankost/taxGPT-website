@@ -3,8 +3,8 @@
 import * as React from 'react'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { useLoadingCallback } from 'react-loading-hook'
-import { getFirebaseAuth } from '../auth/firebase'
-import { useRedirectParam } from '../../lib/useRedirectParam'
+import { getFirebaseAuth } from '@/app/auth/firebase'
+import { useRedirectParam } from '@/lib/useRedirectParam'
 import { AuthenticationHeader } from '@/components/Authentication/authentication-header'
 import { AuthenticationFooter } from '@/components/Authentication/authentication-footer'
 import { ResetPasswordMainContent } from '@/components/Authentication/reset-main-content'
@@ -20,7 +20,10 @@ export function ResetPasswordPage() {
 
       const auth = getFirebaseAuth()
       setIsSent(false)
-      await sendPasswordResetEmail(auth, email)
+      const currentUrl = window.location.origin
+      await sendPasswordResetEmail(auth, email, {
+        url: `${currentUrl}/login`
+      })
       setEmail('')
       setIsSent(true)
     }
