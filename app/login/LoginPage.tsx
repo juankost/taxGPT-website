@@ -12,7 +12,6 @@ import { appendRedirectParam } from '../../lib/redirect'
 import { toUserFromCredentials } from '@/lib/user'
 
 import { useLoadingCallback } from 'react-loading-hook'
-import { useRedirect } from '../../lib/useRedirect'
 import { useRedirectParam } from '../../lib/useRedirectParam'
 import {
   useRedirectAfterLogin,
@@ -33,7 +32,7 @@ export function LoginPage() {
   const [hasLogged, setHasLogged] = React.useState(false)
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const [showEmailLinkLogin, setShowEmailLinkLogin] = React.useState(false)
-  const { user, setUser } = useAuth() // this is a hook to update the context after we have authenticated
+  const { setUser } = useAuth() // this is a hook to update the context after we have authenticated
   const { resolvedTheme } = useTheme()
 
   // This checks in the URL if we already specified where we want to redirect
@@ -51,7 +50,6 @@ export function LoginPage() {
       const auth = getFirebaseAuth()
       const credential = await signInWithEmailAndPassword(auth, email, password)
       if (!credential.user.emailVerified) {
-        console.log('Email not verified')
         setIsModalOpen(true)
         return
       }

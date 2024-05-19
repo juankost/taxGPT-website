@@ -10,10 +10,11 @@ import { AuthProvider } from '@/app/auth/AuthProvider'
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
-    default: 'TaxIntelligence Chatbot',
-    template: `%s - AI Chatbot`
+    default: 'TaxIntelligence',
+    template: `%s - TaxIntelligence`
   },
-  description: 'An AI-powered chatbot to help you understand the tax law.',
+  description:
+    'An AI-powered chatbot to help you understand the Slovenian tax law.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png'

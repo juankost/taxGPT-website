@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
     cookieSerializeOptions: authConfig.cookieSerializeOptions,
     cookieSignatureKeys: authConfig.cookieSignatureKeys,
     serviceAccount: authConfig.serviceAccount,
-    debug: true,
+    debug: false,
     checkRevoked: true,
     handleValidToken: async ({ token, decodedToken }, headers) => {
       if (
