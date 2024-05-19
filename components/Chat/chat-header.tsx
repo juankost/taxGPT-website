@@ -1,19 +1,17 @@
 'use client'
-import * as React from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/Common/button'
-import { IconSeparator, IconTaxLogo, IconHome } from '@/components/Common/icons'
+import { IconSeparator, IconHome } from '@/components/Common/icons'
 import { UserMenu } from '@/components/Chat/chat-user-menu'
 import { SidebarMobile } from '@/components/Sidebar/sidebar-mobile'
 import { SidebarToggle } from '@/components/Sidebar/sidebar-toggle'
 import { ChatHistory } from '@/components/Chat/chat-history'
 import { useAuth } from '@/app/auth/AuthContext'
-import { useRedirect } from '@/lib/useRedirect'
 
 export function Header() {
   // Use a state to read the user from the context
   const { user } = useAuth()
-  // useRedirect()
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 border-b shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
