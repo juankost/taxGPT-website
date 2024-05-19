@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  authMiddleware,
-  redirectToHome,
-  redirectToLogin
-} from 'next-firebase-auth-edge'
+import { authMiddleware, redirectToLogin } from 'next-firebase-auth-edge'
 import { authConfig } from './config/server-config'
 import { nanoid } from '@/lib/utils'
 
-const PUBLIC_PATHS = ['/register', '/login', '/reset-password']
+const PUBLIC_PATHS = [
+  '/register',
+  '/login',
+  '/reset-password',
+  '/privacy-policy',
+  '/terms-of-service'
+]
 
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
