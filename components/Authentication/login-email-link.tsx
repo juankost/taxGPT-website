@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { sendSignInLinkToEmail } from 'firebase/auth'
 import { getFirebaseAuth } from '@/app/auth/firebase'
-import { Button } from '../Button'
-import { Input } from '../Input'
-import { FormError } from '../FormError'
+import { Button } from '@/components/Button/button'
+import { Input } from '@/components/Input/Input'
+import { FormError } from '@/components/FormError/FormError'
 import { useLoadingCallback } from 'react-loading-hook'
 
 interface EmailLinkLoginProps {

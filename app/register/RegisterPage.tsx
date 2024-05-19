@@ -7,9 +7,8 @@ import {
   onAuthStateChanged
 } from 'firebase/auth'
 import { getFirebaseAuth } from '@/app/auth/firebase'
-import { PasswordFormValue } from '../../components/PasswordForm/PasswordForm'
-import { useRedirectParam } from '../../lib/useRedirectParam'
-import { useRedirect } from '../../lib/useRedirect'
+import { PasswordFormValue } from '@/components/PasswordForm/PasswordForm'
+import { useRedirectParam } from '@/lib/useRedirectParam'
 import { getGoogleProvider, loginWithProvider } from '@/app/auth/firebase'
 import { AuthenticationHeader } from '@/components/Authentication/authentication-header'
 import { AuthenticationFooter } from '@/components/Authentication/authentication-footer'

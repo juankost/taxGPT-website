@@ -2,10 +2,10 @@
 
 import * as React from 'react'
 import Link from 'next/link'
-import { Button } from '../../components/Button'
-import { FormError } from '../../components/FormError'
-import { Input } from '../../components/Input'
-import { appendRedirectParam } from '../../lib/redirect'
+import { Button } from '@/components/Button/button'
+import { FormError } from '@/components/FormError/FormError'
+import { Input } from '@/components/Input/Input'
+import { appendRedirectParam } from '@/lib/redirect'
 
 interface ResetPasswordMainContentProps {
   email: string
