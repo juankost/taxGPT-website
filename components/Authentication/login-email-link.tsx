@@ -36,7 +36,7 @@ const LoginEmailLinkContent: React.FC<EmailLinkLoginProps> = ({
         <section className="w-84 mx-auto">
           <div className="flex flex-col items-center my-5 p-10 pt-10 pb-6 box-content">
             <div className="flex flex-col gap-8">
-              <p className="text-center text-lg font-medium text-gray-700">
+              <p className="text-center text-lg font-medium text-gray-700 dark:text-gray-300 ">
                 Please check your email for the login link.
               </p>
               <Button
@@ -70,7 +70,7 @@ const LoginEmailLinkContent: React.FC<EmailLinkLoginProps> = ({
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Email address"
-            className="'w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+            className="'w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-gray-300 focus:ring-blue-500 focus:border-blue-500'"
           />
           <Button
             loading={isLoading && !emailLinkError}

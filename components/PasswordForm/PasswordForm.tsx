@@ -40,7 +40,7 @@ export function PasswordForm({
   }
 
   const inputBaseClasses =
-    'w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500 focus:border-blue-500'
+    'w-full px-4 py-2 border rounded-lg text-gray-700 dark:text-gray-300 dark:bg-gray-800 focus:ring-blue-500 focus:border-blue-500'
 
   return (
     <div className={cx(styles.container, props.className)}>
