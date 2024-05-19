@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react'
+import React from 'react'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { useLoadingCallback } from 'react-loading-hook'
 import { getFirebaseAuth } from '@/app/auth/firebase'
