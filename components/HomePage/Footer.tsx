@@ -7,11 +7,17 @@ const Footer = () => (
       <IconTaxIntelligence inverted />
     </div>
     <div className="items-center flex gap-3 py-0 text-xs text-token-text-tertiary">
-      <a href="#" className="cursor-pointer font-normal underline">
+      <a
+        href="/terms-of-service"
+        className="cursor-pointer font-normal underline"
+      >
         Terms of Use
       </a>
       <span className="text-token-text-tertiary">|</span>
-      <a href="#" className="cursor-pointer font-normal underline">
+      <a
+        href="/privacy-policy"
+        className="cursor-pointer font-normal underline"
+      >
         Privacy Policy
       </a>
     </div>
