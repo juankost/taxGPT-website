@@ -29,7 +29,7 @@ const ResetPasswordMainContent: React.FC<ResetPasswordMainContentProps> = ({
   return (
     <main className="flex flex-col justify-center items-center">
       <section className="w-84 mx-auto">
-        <div className="flex flex-col items-center my-5 p-10 pt-10 pb-6 box-content">
+        <div className="flex flex-col items-center my-5 p-10 pb-6 box-content">
           <h2 className="text-center text-[20px] leading-[1.2] md:text-[32px] md:leading-8 font-bold">
             Reset password
           </h2>

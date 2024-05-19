@@ -1,7 +1,6 @@
 import { getToken } from '@firebase/app-check'
 import { getAppCheck } from './AppCheck'
 import { UserCredential } from 'firebase/auth'
-import { toUser } from '@/lib/user'
 
 export async function loginWithCredential(credential: UserCredential) {
   const idToken = await credential.user.getIdToken()

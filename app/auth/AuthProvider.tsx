@@ -1,18 +1,6 @@
 'use client'
 import * as React from 'react'
-import {
-  IdTokenResult,
-  onIdTokenChanged,
-  onAuthStateChanged,
-  User as FirebaseUser,
-  getAuth
-} from 'firebase/auth'
-import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
-import { AuthContext, User, getAuthenticationStatus } from './AuthContext'
-import { getFirebaseAuth } from './firebase'
-import { login, logout } from '@/app/auth'
-import { toAuthTime, toUserFromCredentials } from '@/lib/user'
-import { refreshToken } from '@/app/auth'
+import { AuthContext, User } from './AuthContext'
 
 export interface AuthProviderProps {
   serverUser: User | null
