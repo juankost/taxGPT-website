@@ -6,7 +6,7 @@ const LeftPane = () => (
     className="relative flex flex-1 flex-col justify-center items-start px-5 pt-8 text-white"
     style={{ backgroundColor: 'rgb(0, 0, 46)' }}
   >
-    <Header />
+    {/* <Header /> */}
     <div className="flex flex-col text-[32px] leading-[1.2] md:text-[40px]">
       <div className="-mt-4 flex w-full flex-col pr-5 md:pr-8 lg:pr-10">
         <p className="text-[#D292FF] font-bold">TaxIntelligence</p>
