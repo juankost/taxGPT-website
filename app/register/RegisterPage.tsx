@@ -36,7 +36,8 @@ export function RegisterPage() {
   const definedRedirectPath = useRedirectParam()
   const newChatRedirectPath = `/chat/${nanoid()}`
   const redirectPath = definedRedirectPath || newChatRedirectPath
-  const redirectAfterRegister = useRedirectAfterLogin('/')
+  const redirectBeforeVerification = useRedirectAfterLogin('/')
+  const redirectAfterRegister = useRedirectAfterLogin(redirectPath)
 
   const [registerWithEmailAndPassword, isRegisterLoading, error] =
     useLoadingCallback(async ({ email, password }: PasswordFormValue) => {
@@ -59,14 +60,14 @@ export function RegisterPage() {
       const idTokenResult = await credential.user.getIdTokenResult()
       await login(idTokenResult.token)
       setUser(toUserFromCredentials(credential.user, idTokenResult)) // Update context with user info
-      useRedirect(redirectPath)
+      redirectAfterRegister()
     })
 
   const closeModal = () => {
     setIsModalOpen(false)
     logoutProvider(getFirebaseAuth())
     logoutCookie()
-    redirectAfterRegister()
+    redirectBeforeVerification()
   }
 
   return (

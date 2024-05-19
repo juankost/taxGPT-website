@@ -13,5 +13,6 @@ export function useRedirect(redirectPath: string = '/') {
       return
     }
     router.push(redirect ?? redirectPath)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, router, redirect])
 }

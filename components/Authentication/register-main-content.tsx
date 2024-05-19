@@ -21,7 +21,7 @@ const RegisterMainContent: React.FC<RegisterMainContentProps> = ({
   return (
     <main className="flex flex-col justify-center items-center">
       <section className="w-84 mx-auto">
-        <div className="flex flex-col items-center my-5 p-10 pt-10 pb-6 box-content">
+        <div className="flex flex-col items-center my-5 p-10 pb-6 box-content">
           <h2 className="text-center text-[20px] leading-[1.2] md:text-[32px] md:leading-8 font-bold">
             Create an account
           </h2>
@@ -32,7 +32,7 @@ const RegisterMainContent: React.FC<RegisterMainContentProps> = ({
             loading={isRegisterLoading}
             error={error}
           />
-          <div className="divider-wrapper flex flex-row uppercase border-none text-xs font-normal m-0 p-0 pb-6 pt-6 items-center justify-center w-84 align-baseline">
+          <div className="divider-wrapper flex flex-row uppercase border-none text-xs font-normal m-0 p-0 py-6 items-center justify-center w-84 align-baseline">
             <hr className="flex-auto border-b border-gray-300 mr-2 my-0" />
             <span>Or</span>
             <hr className="flex-auto border-b border-gray-300 ml-2 my-0" />
