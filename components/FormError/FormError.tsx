@@ -1,6 +1,6 @@
 import styles from './FormError.module.css'
 import { cx } from '../Common/classNames'
-export function FormError(props: JSX.IntrinsicElements['span']) {
+const FormError = (props: JSX.IntrinsicElements['span']) => {
   const errorStyle = {
     fontSize: '0.675rem',
     lineHeight: '1rem',
@@ -12,3 +12,4 @@ export function FormError(props: JSX.IntrinsicElements['span']) {
   }
   return <span {...props} style={{ ...errorStyle, ...props.style }} />
 }
+export { FormError }

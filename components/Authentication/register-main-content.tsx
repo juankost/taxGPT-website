@@ -1,6 +1,6 @@
 import React from 'react'
-import { PasswordForm } from '../../components/PasswordForm'
-import { Button } from '../../components/Button'
+import { PasswordForm } from '@/components/PasswordForm/PasswordForm'
+import { Button } from '@/components/Button/button'
 import { IconGoogle } from '@/components/Common/icons'
 
 interface RegisterMainContentProps {

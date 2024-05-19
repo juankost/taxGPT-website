@@ -2,7 +2,7 @@ import * as React from 'react'
 import { IconLoading } from '@/components/Common/icons'
 import { cx } from '../Common/classNames'
 
-export function Button({
+const Button = ({
   loading,
   children,
   variant = 'outlined',
@@ -12,7 +12,7 @@ export function Button({
   loading?: boolean
   variant?: 'contained' | 'outlined'
   center_text?: boolean
-}) {
+}) => {
   // Define base classes for all buttons
   const baseClasses =
     'flex items-center space-x-5 rounded-lg inline-block px-7 py-4 text-m leading-snug border rounded shadow-md transition duration-150 ease-in-out w-full'
@@ -54,3 +54,5 @@ export function Button({
     </button>
   )
 }
+
+export { Button }

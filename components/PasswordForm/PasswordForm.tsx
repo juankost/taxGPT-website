@@ -1,11 +1,11 @@
 import * as React from 'react'
 import styles from './PasswordForm.module.css'
 import { cx } from '../Common/classNames'
-import { Input } from '../Input'
+import { Input } from '@/components/Input/Input'
 import { IconButton } from '@/components/IconButton/IconButton'
-import { Button } from '../Button'
+import { Button } from '@/components/Button/button'
 import { FirebaseError } from '@firebase/util'
-import { FormError } from '../FormError'
+import { FormError } from '@/components/FormError/FormError'
 import { IconVisible, IconHidden } from '@/components/Common/icons'
 export interface PasswordFormValue {
   email: string
@@ -18,13 +18,13 @@ interface PasswordFormProps
   onSubmit: (value: PasswordFormValue) => void
   error?: FirebaseError
 }
-export function PasswordForm({
+const PasswordForm = ({
   children,
   loading,
   error,
   onSubmit,
   ...props
-}: PasswordFormProps) {
+}: PasswordFormProps) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [isHidden, setIsHidden] = React.useState(true)
@@ -100,3 +100,4 @@ export function PasswordForm({
     </div>
   )
 }
+export { PasswordForm }

@@ -1,11 +1,13 @@
 import React from 'react'
-import { PasswordForm } from '../PasswordForm'
+import {
+  PasswordForm,
+  PasswordFormValue
+} from '@/components/PasswordForm/PasswordForm'
 import Link from 'next/link'
-import { Button } from '../Button'
+import { Button } from '@/components/Button/button'
 import { IconGoogle } from '@/components/Common/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { PasswordFormValue } from '../PasswordForm/PasswordForm'
 import { FirebaseError } from '@firebase/util'
 
 interface LoginMainContentProps {
