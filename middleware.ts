@@ -20,9 +20,10 @@ export async function middleware(request: NextRequest) {
     cookieSerializeOptions: authConfig.cookieSerializeOptions,
     cookieSignatureKeys: authConfig.cookieSignatureKeys,
     serviceAccount: authConfig.serviceAccount,
-    debug: false,
+    debug: true,
     checkRevoked: true,
     handleValidToken: async ({ token, decodedToken }, headers) => {
+      console.log('Token', decodedToken)
       if (
         PUBLIC_PATHS.includes(request.nextUrl.pathname) ||
         request.nextUrl.pathname === '/'
