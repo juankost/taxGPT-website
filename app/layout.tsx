@@ -7,6 +7,11 @@ import { cn } from '@/lib/utils'
 import { Providers } from '@/components/Chat/providers'
 import { AuthProvider } from '@/app/auth/AuthProvider'
 
+import { authConfig } from '@/config/server-config'
+import { toUserFromToken } from '../lib/user'
+import { getTokens } from 'next-firebase-auth-edge'
+import { cookies } from 'next/headers'
+
 export const metadata = {
   metadataBase: new URL(`https://${process.env.VERCEL_URL}`),
   title: {
@@ -33,6 +38,11 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  // Note, trying to get the tokens from the cookies, means the whole app will always be dynamic
+  // TODO: Find a better solution that allows us to load part of the app statically
+  const tokens = await getTokens(cookies(), authConfig)
+  const serverUser = tokens ? toUserFromToken(tokens) : null
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -50,7 +60,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-screen">
-            <AuthProvider serverUser={null}>
+            <AuthProvider serverUser={serverUser}>
               <main className="flex flex-col flex-1 bg-muted/50">
                 {children}
               </main>
